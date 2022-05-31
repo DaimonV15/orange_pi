@@ -1,1 +1,2 @@
-orange_pi_project
+Maga_Project
+FaceRecognition for linux on base Single-board computer
