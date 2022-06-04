@@ -16,14 +16,9 @@ public class DataBase {
 
     Map<String, Mat> hashmap = new HashMap<String, Mat>();
     Face face = new Face();
-    Frames frames = new Frames();
 
-/*    private static  final String directorySrc = "C:/Users/dimit/IdeaProjects/Face_identification/src/Face_Identification_OpenCV";
-    private static  final String directoryFeatureBase = "C:/Users/dimit/IdeaProjects/Face_identification/src/FeatureBase";*/
-
-    private static  final String directorySrc = "C:/Users/dimit/IdeaProjects/orange_pi/src/Face_Identification_OpenCV";
-    private static  final String directoryFeatureBase = "C:/Users/dimit/IdeaProjects/orange_pi/src/FeatureBase";
-    private static  final String directoryPhotoBase = "C:/Users/dimit/IdeaProjects/orange_pi/src/PhotoBase";
+    private static  final String directorySrc = "/home/daimon/orange_pi/orange_pi/src/Face_Identification_Diplom";
+    private static  final String directoryPhotoBase = "/home/daimon/orange_pi/orange_pi/src/PhotoBase";
 
     public final boolean checkPath(String pathName) {
         File path = new File(pathName);

@@ -6,12 +6,11 @@ import org.opencv.objdetect.CascadeClassifier;
 
 public class CascadePoint {
 
-    Frames frames = new Frames();
     CascadeClassifier cascade = new CascadeClassifier();
     Point pt1 = new Point();
     Point pt2 = new Point();
     MatOfRect matofrect = new MatOfRect();
-    private static final String pathModel = "C:/Users/dimit/IdeaProjects/orange_pi/haarcascade_frontalface_default.xml";
+    private static final String pathModel = "/home/daimon/orange_pi/orange_pi/haarcascade_frontalface_default.xml";
 
     public final void cascadeLibrary (String link) {
         if (!cascade.load(link)) {
