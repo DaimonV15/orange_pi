@@ -23,7 +23,8 @@ public class Window {
     //------------------
 
     public Window(int camera) {
-        inputVideo.open(camera);
+        inputVideo.open("/dev/video1");
+	//inputVideo.open("webcam");
         cascade.cascadeLibrary();
     }
 

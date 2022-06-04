@@ -1,2 +1,2 @@
 #!/bin/bash
-src.Face_Identification_Diplom.Main
+java src.Face_Identification_Diplom.Main
