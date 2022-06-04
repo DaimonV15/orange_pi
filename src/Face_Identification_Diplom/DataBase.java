@@ -19,6 +19,7 @@ public class DataBase {
 
     private static  final String directorySrc = "/home/daimon/orange_pi/orange_pi/src/Face_Identification_Diplom";
     private static  final String directoryPhotoBase = "/home/daimon/orange_pi/orange_pi/src/PhotoBase";
+    private static  final String directoryGPIO_PA20 = "/sys/class/gpio/gpio20/"; //value
 
     public final boolean checkPath(String pathName) {
         File path = new File(pathName);
@@ -131,4 +132,14 @@ public class DataBase {
         saveImage(frame, name, directoryPhotoBase);
         System.out.println("File was added!");
     } //Сохранение нового эталонного изображения
+
+    public final void switchRelay () throws IOException, InterruptedException {
+        File file = new File(directorySrc + "/value"); //sys/class/gpio/gpio20/value - в этот файл пишем 1/0, регулирующие напряжение для реле 5В
+        //gpio20-он же PA20, (position of letter in alphabet - 1) * 32 + pin number для процессора H3
+        FileWriter writer = new FileWriter(file, true);
+        writer.write("1"); //Подаем регулирующие напряжение
+        Thread.sleep(5000); //Ждем ± 5 секунд
+        writer.write("0"); //Убираем
+        writer.flush();
+    }
 }

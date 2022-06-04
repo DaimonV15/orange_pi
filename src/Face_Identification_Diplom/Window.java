@@ -63,6 +63,8 @@ public class Window {
                                 if (face.featureMatch(entry.getValue(), feature, 0) > 0.363 &&
                                         face.featureMatch(entry.getValue(), feature, 1) < 1.128) { //сверка по 2ум коэфам
                                     System.out.println(entry.getKey()); //вывод имени кого распознала система
+                                    ///sys/class/gpio/gpio20/value (пишем в валуе)
+                                    dataBase.switchRelay();
                                     break;
                                 }
                             }
