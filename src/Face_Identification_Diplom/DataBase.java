@@ -17,8 +17,8 @@ public class DataBase {
     Map<String, Mat> hashmap = new HashMap<String, Mat>(); //делаем хэшмап для связки имя - изображение
     Face face = new Face();
 
-    private static  final String directorySrc = "/home/daimon/orange_pi/orange_pi/src/Face_Identification_Diplom";
-    private static  final String directoryPhotoBase = "/home/daimon/orange_pi/orange_pi/src/PhotoBase";
+    private static  final String directorySrc = "/home/daimon/orange_pi/src/Face_Identification_Diplom";
+    private static  final String directoryPhotoBase = "/home/daimon/orange_pi/src/PhotoBase";
     private static  final String directoryGPIO_PA20 = "/sys/class/gpio/gpio20/"; //value
 
     public final boolean checkPath(String pathName) {

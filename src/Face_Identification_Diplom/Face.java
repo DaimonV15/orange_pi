@@ -22,7 +22,7 @@ public class Face {
     public static final double cos_thresh = 0.363;
     public static final double L2_thresh = 1.128;
 
-    private static final String pathModel = "/home/daimon/orange_pi/orange_pi/face_recognizer_fast.onnx"; //Расположение onnx файла
+    private static final String pathModel = "/home/daimon/orange_pi/face_recognizer_fast.onnx"; //Расположение onnx файла
     CascadePoint cascadePoint = new CascadePoint(); //Объявляеся класс
 
     public final Mat getFaceRecognitionFuture (Mat frame, int colOfPeople) {

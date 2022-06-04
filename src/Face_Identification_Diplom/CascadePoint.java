@@ -10,7 +10,7 @@ public class CascadePoint {
     Point pt1 = new Point();
     Point pt2 = new Point();
     MatOfRect matofrect = new MatOfRect();
-    private static final String pathModel = "/home/daimon/orange_pi/orange_pi/haarcascade_frontalface_default.xml";
+    private static final String pathModel = "/home/daimon/orange_pi/haarcascade_frontalface_default.xml";
 
     public final void cascadeLibrary () {
         if (!cascade.load(pathModel)) {
