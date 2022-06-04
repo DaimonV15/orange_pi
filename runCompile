@@ -1,0 +1,5 @@
+#!/bin/bash
+
+javac -cp /home/daimon/orange_pi/opencvJava455/build/bin/opencv-455.jar -d /home/daimon/orange_pi/orange_pi/out/production/orange_pi/ ./src/Face_Identification_Diplom/*
+
+
