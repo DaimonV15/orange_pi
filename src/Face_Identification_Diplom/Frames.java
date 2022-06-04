@@ -14,7 +14,7 @@ public class Frames {
 
     public final Image MatToImage (Mat frame) {
         return HighGui.toBufferedImage(frame);
-    }
+    } //Представление матрицы в изображение
 
     public final Mat ImageToMat (String links) {
         Mat returnMat = new Mat();
@@ -25,7 +25,7 @@ public class Frames {
             }
             boolean temp = Imgcodecs.haveImageReader(links);
             if (temp) {
-                returnMat = Imgcodecs.imread(links);
+                returnMat = Imgcodecs.imread(links); //конвертация
             } else {
                 System.err.println("image missing");
             }
@@ -37,17 +37,17 @@ public class Frames {
             System.err.println("IMAGE_TO_MAT: " + e.getMessage());
         }
         return returnMat;
-    }
+    } //Представление изображения в матричной форме
 
     public final Mat frameColorConvert (Mat frameColorConvertFrame) {
         Imgproc.cvtColor(frameColorConvertFrame, frameColorConvertFrame, Imgproc.COLOR_BGR2GRAY);
         return frameColorConvertFrame;
-    }
+    } //RGB -> G // 3 -> 1
 
     public final Mat drawRectangle (Mat drawRectangleFrame, Point pt1, Point pt2, Scalar color, int thickness) {
         Imgproc.rectangle(drawRectangleFrame, pt1, pt2, color, thickness);
         return drawRectangleFrame;
-    }
+    } //Отрисовка квадрата вокруг полученных координат лица
 
     public final Mat scaleBlur (Mat scaleBlurFrame, int degree) {
         Size size = new Size();
@@ -79,14 +79,14 @@ public class Frames {
         }
         Imgproc.GaussianBlur(scaleBlurFrame, scaleBlurFrame, size, 0);
         return scaleBlurFrame;
-    }
+    } //Размытие изображение для меньшего времени распознования + убирает некоторые проблемы с освещенностью
 
     public final Mat scaleCanny (Mat scaleCannyFrame, int min, int max) {
         Imgproc.Canny(scaleCannyFrame, scaleCannyFrame, min, max);
         return scaleCannyFrame;
-    }
+    } //Выделяет границы объекта
 
     public final void resize (Mat frame) {
         Imgproc.resize(frame, frame, new Size(112, 112));
-    }
+    } //Преобразование марицы в одинаковый для всех размер
 }

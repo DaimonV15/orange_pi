@@ -14,7 +14,7 @@ import java.util.Scanner;
 
 public class DataBase {
 
-    Map<String, Mat> hashmap = new HashMap<String, Mat>();
+    Map<String, Mat> hashmap = new HashMap<String, Mat>(); //делаем хэшмап для связки имя - изображение
     Face face = new Face();
 
     private static  final String directorySrc = "/home/daimon/orange_pi/orange_pi/src/Face_Identification_Diplom";
@@ -43,7 +43,7 @@ public class DataBase {
             }
         }
         return false;
-    }
+    } //Проверка пути; просмотр содержимого пути
 
     public final boolean checkFile(String pathName, String fileName) {
         File file = new File(pathName + "/" + fileName);
@@ -52,11 +52,11 @@ public class DataBase {
             return false;
         }
         return true;
-    }
+    } //Проверка файла
 
     public final void saveImage (Mat frame, String fileName, String directory) {
         Imgcodecs.imwrite(directory + "/" + fileName + ".jpg", frame);
-    }
+    } //Сохраняем полученное изображение
 
     public final void loadFeatureLibrary () throws IOException {
         if (!checkFile(directorySrc, "config.txt")) {
@@ -82,7 +82,7 @@ public class DataBase {
         }
         reader.close();
         System.out.println("library loaded!");
-    }
+    } //Альтернативное сохранение характеристик лица в видее config.txt файла
 
     public final void addToFeatureLibrary (Mat frame, String name) throws IOException {
         if (!checkFile(directorySrc, "config.txt")) {
@@ -99,7 +99,7 @@ public class DataBase {
         FileWriter writer = new FileWriter(file, true);
         writer.write(name + " = " + frame.dump() + "\n");
         writer.flush();
-    }
+    } //Альтернативное сохранение характеристик лица в видее config.txt файла
 
     public final void loadFeatureLibraryByJPG () {
         Frames frames = new Frames();
@@ -114,7 +114,7 @@ public class DataBase {
                         frames.ImageToMat(path + "/" + item.getName()), 0));
             }
         }
-    }
+    } //Загрузка эталонных изображение
 
     public final void addToFeatureLibraryByJPG (Mat frame, String name) {
         if (checkFile(directoryPhotoBase, name + ".jpg")) {
@@ -130,5 +130,5 @@ public class DataBase {
         hashmap.put(name, frame);
         saveImage(frame, name, directoryPhotoBase);
         System.out.println("File was added!");
-    }
+    } //Сохранение нового эталонного изображения
 }

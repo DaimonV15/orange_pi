@@ -9,6 +9,9 @@ import java.util.Map;
 
 public class Window {
 
+    //------------------
+    //Объявление некоторых переменных:
+
     Face face = new Face();
     Mat frame = new Mat();
     Frames frames = new Frames();
@@ -16,55 +19,57 @@ public class Window {
     int colOfPeople;
     MatOfRect rect = new MatOfRect();
 
+    //------------------
+    //Инициализация используемых классов:
+
     CascadePoint cascade = new CascadePoint();
     VideoCapture inputVideo = new VideoCapture();
     DataBase dataBase = new DataBase();
 
     //------------------
 
-    public Window(int camera) {
-        inputVideo.open("/dev/video1");
-	//inputVideo.open("webcam");
-        cascade.cascadeLibrary();
+    public Window() {
+        inputVideo.open("/dev/video1"); //Получем видеопоток с камеры
+        cascade.cascadeLibrary(); //Загружаем каскады Хаара
     }
 
     public void windowRun() {
-        dataBase.loadFeatureLibraryByJPG();
-        if (inputVideo.isOpened()) {
+        dataBase.loadFeatureLibraryByJPG(); //Загружаем эталонные изображения которые уже на устройстве
+        if (inputVideo.isOpened()) { //Проверка есть ли видеопоток
             try {
-                inputVideo.read(frame);
+                inputVideo.read(frame); //Берем фрейм
                 if (!frame.empty()) {
                     System.out.println(frame.width() + ", " + frame.height());
                 }
             } catch (Exception e) {
-                System.err.println("CONVERT_TO_GRAY_LOAD_VIDEO: " + e.getMessage());
+                System.err.println("CHECK_FRAME_IN_WINDOW_RUN: " + e.getMessage());
             }
         }
     }
 
     public void convertVideo() {
-        while (true) {
-            if (inputVideo.isOpened()) {
+        while (true) { //Цикл
+            if (inputVideo.isOpened()) { //Проверка на получение потока
                 try {
-                    inputVideo.read(frame);
+                    inputVideo.read(frame); //Забираем фрейм из видепотока
                     if (!frame.empty()) {
                         frame.copyTo(src_frame);
-                        frames.frameColorConvert(frame);
-                        frames.scaleBlur(frame, 1);
-                        rect = cascade.findStartPoint(frame);
+                        frames.frameColorConvert(frame); //Делаем матрицу с 1 слоем
+                        frames.scaleBlur(frame, 1); //Размываем изображение
+                        rect = cascade.findStartPoint(frame); //Ищем лицо нна изображении
                         if ((colOfPeople = cascade.colOfPeople(rect)) >= 1) {
-                            Mat feature = face.getFaceRecognitionFuture(src_frame, 0);
-                            for (Map.Entry<String, Mat> entry : dataBase.hashmap.entrySet()) {
+                            Mat feature = face.getFaceRecognitionFuture(src_frame, 0); //Получаем характеристики лица в матричной форме 1x128
+                            for (Map.Entry<String, Mat> entry : dataBase.hashmap.entrySet()) { //прогоняем по эталонной базе
                                 if (face.featureMatch(entry.getValue(), feature, 0) > 0.363 &&
-                                        face.featureMatch(entry.getValue(), feature, 1) < 1.128) {
-                                    System.out.println(entry.getKey());
+                                        face.featureMatch(entry.getValue(), feature, 1) < 1.128) { //сверка по 2ум коэфам
+                                    System.out.println(entry.getKey()); //вывод имени кого распознала система
                                     break;
                                 }
                             }
                         }
                     }
                 } catch (Exception e) {
-                    System.err.println("CONVERT_TO_GRAY_LOAD_VIDEO: " + e.getMessage());
+                    System.err.println("MAIN_CYCLE_ERROR_IN_ConvertVideo: " + e.getMessage());
                 }
             }
         }
