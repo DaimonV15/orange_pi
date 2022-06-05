@@ -29,7 +29,7 @@ public class Window {
     //------------------
 
     public Window() {
-        inputVideo.open("/dev/video1"); //Получем видеопоток с камеры
+        inputVideo.open("/dev/video0"); //Получем видеопоток с камеры
         cascade.cascadeLibrary(); //Загружаем каскады Хаара
     }
 
@@ -57,13 +57,13 @@ public class Window {
                         frames.frameColorConvert(frame); //Делаем матрицу с 1 слоем
                         frames.scaleBlur(frame, 1); //Размываем изображение
                         rect = cascade.findStartPoint(frame); //Ищем лицо нна изображении
-                        if ((colOfPeople = cascade.colOfPeople(rect)) >= 1) {
+                        if ((cascade.colOfPeople(rect)) >= 1) {
                             Mat feature = face.getFaceRecognitionFuture(src_frame, 0); //Получаем характеристики лица в матричной форме 1x128
                             for (Map.Entry<String, Mat> entry : dataBase.hashmap.entrySet()) { //прогоняем по эталонной базе
                                 if (face.featureMatch(entry.getValue(), feature, 0) > 0.363 &&
                                         face.featureMatch(entry.getValue(), feature, 1) < 1.128) { //сверка по 2ум коэфам
                                     System.out.println(entry.getKey()); //вывод имени кого распознала система
-                                    dataBase.switchRelay(); //(управляющее напряжение на реле (открытие замка)
+                                    //dataBase.switchRelay(); //(управляющее напряжение на реле (открытие замка)
                                     break;
                                 }
                             }
