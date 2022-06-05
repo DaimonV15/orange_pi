@@ -23,31 +23,30 @@ public class Face {
     public static final double L2_thresh = 1.128;
 
     private static final String pathModel = "/home/daimon/orange_pi/face_recognizer_fast.onnx"; //Расположение onnx файла
+    FaceRecognizerSF faceRecognizerSF = FaceRecognizerSF.create(pathModel, new String(""));
     CascadePoint cascadePoint = new CascadePoint(); //Объявляеся класс
 
     public final Mat getFaceRecognitionFuture (Mat frame, int colOfPeople) {
         Mat aligned_image = new Mat();
         Mat feature = new Mat();
-        FaceRecognizerSF faceRecognizerSF = FaceRecognizerSF.create(pathModel, new String("")); //Вызываем библиотеку (Необходимо переопределять её)
         Frames frames = new Frames();
         Mat box_image = repaintFace(frame, colOfPeople); //Получаем матрицу обнаруженного лица
         frames.resize(box_image); //Изменяем её размер
-        //faceRecognizerSF.alignCrop(frame, box_image, aligned_image); //Выравниваем лицо
-        faceRecognizerSF.feature(box_image, feature); //Получаем 128х1 матрицу характеристик лица
-        //faceRecognizerSF.feature(aligned_image, feature);
+        faceRecognizerSF.alignCrop(frame, box_image, aligned_image); //Выравниваем лицо
+        //faceRecognizerSF.feature(box_image, feature); //Получаем 128х1 матрицу характеристик лица
+        faceRecognizerSF.feature(aligned_image, feature);
         return feature;
     } //Получем матричное представление характеристик лица
 
     public final Mat getFaceRecognitionFuture (Mat frame, int colOfPeople, MatOfRect rect) {
         Mat aligned_image = new Mat();
         Mat feature = new Mat();
-        FaceRecognizerSF faceRecognizerSF = FaceRecognizerSF.create(pathModel, new String(""));
         Frames frames = new Frames();
         Mat box_image = repaintFace(frame, colOfPeople, rect);
         frames.resize(box_image);
-        //faceRecognizerSF.alignCrop(frame, box_image, aligned_image);
-        faceRecognizerSF.feature(box_image, feature);
-        //faceRecognizerSF.feature(aligned_image, feature);
+        faceRecognizerSF.alignCrop(frame, box_image, aligned_image);
+        //faceRecognizerSF.feature(box_image, feature);
+        faceRecognizerSF.feature(aligned_image, feature);
         return feature;
     }
 
@@ -65,7 +64,6 @@ public class Face {
     }
 
     public final double featureMatch (Mat feature1, Mat feature2, int type) {
-        FaceRecognizerSF faceRecognizerSF = FaceRecognizerSF.create(pathModel, new String("")); //Необходимо переопределить библиотеку
         return faceRecognizerSF.match(feature1, feature2, type); //Сравнение
     } //Функция сравнненния
 }
