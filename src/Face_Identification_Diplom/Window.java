@@ -58,7 +58,7 @@ public class Window {
                         frames.scaleBlur(frame, 1); //Размываем изображение
                         rect = cascade.findStartPoint(frame); //Ищем лицо нна изображении
                         if ((cascade.colOfPeople(rect)) >= 1) {
-                            Mat feature = face.getFaceRecognitionFuture(src_frame, 0); //Получаем характеристики лица в матричной форме 1x128
+                            Mat feature = face.getFaceRecognitionFuture(src_frame, 0, rect); //Получаем характеристики лица в матричной форме 1x128
                             for (Map.Entry<String, Mat> entry : dataBase.hashmap.entrySet()) { //прогоняем по эталонной базе
                                 if (face.featureMatch(entry.getValue(), feature, 0) > 0.363 &&
                                         face.featureMatch(entry.getValue(), feature, 1) < 1.128) { //сверка по 2ум коэфам

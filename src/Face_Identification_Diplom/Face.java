@@ -38,13 +38,31 @@ public class Face {
         return feature;
     } //Получем матричное представление характеристик лица
 
+    public final Mat getFaceRecognitionFuture (Mat frame, int colOfPeople, MatOfRect rect) {
+        Mat aligned_image = new Mat();
+        Mat feature = new Mat();
+        FaceRecognizerSF faceRecognizerSF = FaceRecognizerSF.create(pathModel, new String(""));
+        Frames frames = new Frames();
+        Mat box_image = repaintFace(frame, colOfPeople, rect);
+        frames.resize(box_image);
+        //faceRecognizerSF.alignCrop(frame, box_image, aligned_image);
+        faceRecognizerSF.feature(box_image, feature);
+        //faceRecognizerSF.feature(aligned_image, feature);
+        return feature;
+    }
+
     public final Mat repaintFace (Mat frame, int colOfPeople) {
         cascadePoint.cascadeLibrary();
         MatOfRect matofrect = cascadePoint.findStartPoint(frame); //Получаем координаты лица
         Rect[] rect = matofrect.toArray(); //Представление матрицы в виде массива
-        Mat faceMat = frame.submat(rect[colOfPeople]); //Удобное копирование матрицы из массива :)
-        return faceMat;
+        return frame.submat(rect[colOfPeople]); //Удобное копирование матрицы из массива :)
     } //Получаем матрицу лица
+
+    public final Mat repaintFace (Mat frame, int colOfPeople, MatOfRect MatOfRect) {
+        cascadePoint.cascadeLibrary();
+        Rect[] rectOut = MatOfRect.toArray();
+        return frame.submat(rectOut[colOfPeople]);
+    }
 
     public final double featureMatch (Mat feature1, Mat feature2, int type) {
         FaceRecognizerSF faceRecognizerSF = FaceRecognizerSF.create(pathModel, new String("")); //Необходимо переопределить библиотеку
